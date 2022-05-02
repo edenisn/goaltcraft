@@ -1,3 +1,3 @@
-module github.com/edenisn/altcraft
+module github.com/edenisn/goaltcraft
 
 go 1.16

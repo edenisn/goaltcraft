@@ -1,4 +1,4 @@
-package altcraft
+package goaltcraft
 
 import (
 	"encoding/json"

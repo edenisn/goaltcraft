@@ -7,7 +7,7 @@ Golang client for [Altcraft API 1.1.](https://docs.altcraft.com/pages/viewpage.a
 Install with `go get`:
 
 ```bash
-$ go get github.com/edenisn/altcraft-go
+$ go get github.com/edenisn/goaltcraft
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"os"
 
-	altcraft "github.com/edenisn/altcraft-go"
+	"github.com/edenisn/goaltcraft"
 )
 
 const (
@@ -27,7 +27,7 @@ const (
 )
 
 func main() {
-	client := altcraft.New(token)
+	client := goaltcraft.New(token)
 	// Fetch databases list
 	list, err := client.GetDatabasesList(limit)
 	if err != nil {

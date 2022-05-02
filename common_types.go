@@ -1,4 +1,4 @@
-package altcraft
+package goaltcraft
 
 type baseList struct {
 	Error      int    `json:"error"`
