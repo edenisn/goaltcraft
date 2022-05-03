@@ -1,7 +1,6 @@
 package goaltcraft
 
-type baseList struct {
-	Error      int    `json:"error"`
-	ErrorText  string `json:"error_text"`
-	TotalCount int    `json:"total_count"`
+type baseListResponse struct {
+	Error     int    `json:"error"`
+	ErrorText string `json:"error_text"`
 }

@@ -1,4 +1,4 @@
-# altcraft-go
+# goaltcraft
 
 ## Introduction
 Golang client for [Altcraft API 1.1.](https://docs.altcraft.com/pages/viewpage.action?pageId=2195459)
@@ -24,12 +24,13 @@ import (
 const (
 	token = "YOUR_ALTCRAFT_API_TOKEN"
 	limit = 3
+	fromId = 1
 )
 
 func main() {
 	client := goaltcraft.New(token)
 	// Fetch databases list
-	list, err := client.GetDatabasesList(limit)
+	list, err := client.GetDatabasesList(fromId, limit)
 	if err != nil {
 		fmt.Println("Failed to get databases list")
 		os.Exit(1)

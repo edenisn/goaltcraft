@@ -29,23 +29,21 @@ func New(token string) *API {
 }
 
 // Request will make a call to the actual API
-func (api *API) Request(method, path string, body map[string]interface{}) ([]byte, error) {
+func (api *API) Request(method, path string, body, response interface{}) (*http.Response, error) {
 	client := &http.Client{}
 	requestURL := fmt.Sprintf("%s/%s", api.url, path)
 
-	var bodyBytes io.Reader
-	var err error
-	var data []byte
+	var buf io.ReadWriter
 	if body != nil {
-		body["token"] = api.Token
-		data, err = json.Marshal(body)
-		if err != nil {
+		buf = &bytes.Buffer{}
+		enc := json.NewEncoder(buf)
+		enc.SetEscapeHTML(false)
+		if err := enc.Encode(body); err != nil {
 			return nil, err
 		}
-		bodyBytes = bytes.NewBuffer(data)
 	}
 
-	req, err := http.NewRequest(method, requestURL, bodyBytes)
+	req, err := http.NewRequest(method, requestURL, buf)
 	if err != nil {
 		return nil, err
 	}
@@ -58,14 +56,14 @@ func (api *API) Request(method, path string, body map[string]interface{}) ([]byt
 	}
 	defer resp.Body.Close()
 
-	data, err = ioutil.ReadAll(resp.Body)
+	respBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	if 200 != resp.StatusCode {
-		return nil, fmt.Errorf("%s", data)
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return nil, err
 	}
 
-	return data, nil
+	return resp, nil
 }
